@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="signUpForm" class="container" style="display: none;">
+        <h1 class="form-title">Register</h1>
+        <form method="post" action="connect.php">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="fName" id="fName" placeholder="First Name" required>
+                <label for="fName">First Name</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="lName" id="lName" placeholder="Last Name" required>
+                <label for="lName">Last Name</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" id="login_email" placeholder="Email" required autocomplete="username">
+                <label for="login_email">Email</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="login_password" placeholder="Password" required autocomplete="current-password">
+                <label for="login_password">Password</label>
+            </div>
+            <div id="signup-error-message" class="error-message" style="display: none;"></div>
+            <input type="submit" class="btn" value="Sign Up" name="signUp">
+        </form>
+        <p class="or">
+            ------------------or------------------
+        </p>
+        <div class="icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook"></i>
+        </div>
+        <div class="links">
+            <p>Already Have An Account?</p>
+            <button id="signInButton">Sign In</button>
+        </div>
+    </div>
+
+    <script>
+        // Display error messages from URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const registerError = urlParams.get('register_error');
+            const registerSuccess = urlParams.get('register_success');
+            const signupErrorMessage = document.getElementById('signup-error-message');
+            
+            if (registerSuccess === 'true') {
+                signupErrorMessage.textContent = 'Registration successful! You can now log in.';
+                signupErrorMessage.style.display = 'block';
+                signupErrorMessage.style.backgroundColor = '#e8f5e9';
+                signupErrorMessage.style.color = '#27ae60';
+                signupErrorMessage.style.borderColor = '#c8e6c9';
+            } else if (registerError) {
+                if (registerError === 'email_taken') {
+                    signupErrorMessage.textContent = 'This email has already been taken. Please use a different email.';
+                } else if (registerError === 'connection_failed') {
+                    signupErrorMessage.textContent = 'Connection failed. Please try again.';
+                } else if (registerError === 'insert_failed') {
+                    signupErrorMessage.textContent = 'Registration failed. Please try again.';
+                } else {
+                    signupErrorMessage.textContent = 'An error occurred. Please try again.';
+                }
+                signupErrorMessage.style.display = 'block';
+            }
+        });
+    </script>
+
+    <div id="signInForm" class="container">
+        <h1 class="form-title">Sign In</h1>
+        <form method="post" action="login.php">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" id="signup_email" placeholder="Email" required autocomplete="email">
+                <label for="signup_email">Email</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="signup_password" placeholder="Password" required autocomplete="new-password">
+                <label for="signup_password">Password</label>
+            </div>
+            <div id="login-error-message" class="error-message" style="display: none;"></div>
+            <p class="recover">
+                <a href="#">Forgot Password?</a>
+            </p>
+            <input type="submit" class="btn" value="Sign In" name="signIn">
+        </form>
+        <p class="or">
+            ------------------or------------------
+        </p>
+        <div class="icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook"></i>
+        </div>
+        <div class="links">
+            <p>Don't Have An Account?</p>
+            <button id="signUpButton">Sign Up</button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
